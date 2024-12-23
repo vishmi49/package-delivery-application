@@ -1,0 +1,75 @@
+ {
+  "packages": [
+    {
+      "id": "1",
+      "packageName": "PKG-12345",
+      "priority": "High",
+      "description": "Small box, 2kg",
+      "currentStatus": "In Progress",
+      "additionalInstructions": "Leave at the front door.",
+      "deliveryDetails": {
+        "deliveryDate": "2024-12-13",
+        "deliveryTime": "14:30",
+        "assignedDriver": "John Doe",
+        "trackingNumber": "TRK-0012345"
+      }
+    },
+    {
+      "id": "2",
+      "packageName": "PKG-67890",
+      "priority": "Medium",
+      "description": "Medium-sized parcel, 5kg",
+      "currentStatus": "Delivered",
+      "additionalInstructions": "Signature required upon delivery.",
+      "deliveryDetails": {
+        "deliveryDate": "2024-12-12",
+        "deliveryTime": "09:00",
+        "assignedDriver": "Jane Smith",
+        "trackingNumber": "TRK-0067890"
+      }
+    },
+    {
+      "id": "3",
+      "packageName": "PKG-54321",
+      "priority": "Low",
+      "description": "Large box, 10kg",
+      "currentStatus": "In Progress",
+      "additionalInstructions": "Handle with care, fragile.",
+      "deliveryDetails": {
+        "deliveryDate": "2024-12-15",
+        "deliveryTime": "16:00",
+        "assignedDriver": "Mike Johnson",
+        "trackingNumber": "TRK-0054321"
+      }
+    },
+    {
+      "id": "4",
+      "packageName": "PKG-98765",
+      "priority": "High",
+      "description": "Envelope, 0.5kg",
+      "currentStatus": "In Progress",
+      "additionalInstructions": "Urgent delivery required.",
+      "deliveryDetails": {
+        "deliveryDate": "2024-12-14",
+        "deliveryTime": "12:00",
+        "assignedDriver": "Emily Brown",
+        "trackingNumber": "TRK-0098765"
+      }
+    },
+    {
+      "id": "5",
+      "packageName": "PKG-11122",
+      "priority": "Medium",
+      "description": "Oversized package, 20kg",
+      "currentStatus": "Delivered",
+      "additionalInstructions": "Leave in the garage.",
+      "deliveryDetails": {
+        "deliveryDate": "2024-12-11",
+        "deliveryTime": "10:30",
+        "assignedDriver": "Chris Green",
+        "trackingNumber": "TRK-0011122"
+      }
+    }
+  ]
+}
+
