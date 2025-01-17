@@ -16,6 +16,12 @@ export const createPackageItem = asyncHandler(async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
+    if (user.role !== "admin") {
+      return res.status(401).json({
+        message: "Not authorized to create package item",
+      });
+    }
+
     const deliveryDate = req.body.deliveryDetails?.deliveryDate;
     if (
       !deliveryDate ||
