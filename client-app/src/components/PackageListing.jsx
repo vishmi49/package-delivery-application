@@ -16,7 +16,7 @@ const PackageListing = ({packageItem}) => {
                   {packageItem.description}
                 </div>
   
-                <h3 className="text-indigo-500 mb-2">{packageItem.additionalInstructions}</h3>
+                <h3 className="text-indigo-500 mb-2">{packageItem.deliveryDetails.deliveryDate}</h3>
 
                 <div className="border border-gray-100 mb-5"></div>
 
@@ -29,7 +29,7 @@ const PackageListing = ({packageItem}) => {
                     to={`/package/${packageItem.id}`}
                     className="h-[36px] bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-center text-sm"
                   >
-                    Read More
+                    Reschedule
                   </Link>
                 </div>
               </div>

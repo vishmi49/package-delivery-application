@@ -1,6 +1,6 @@
 import Hero from "../components/Hero";
 import HomeCards from "../components/HomeCards";
-import PackageListings from "../components/PackageListings";
+import InProgressPackageCards from "../components/InProgressPkgCard";
 import ViewAllPackages from "../components/ViewAllPackages";
 
 const HomePage = () => {
@@ -8,7 +8,7 @@ const HomePage = () => {
     <>
       <Hero />
       <HomeCards />
-      <PackageListings isHome={true} showInProgress={true} />
+      <InProgressPackageCards isHome={true} showInProgress={true} />
       <ViewAllPackages />
     </>
   );
