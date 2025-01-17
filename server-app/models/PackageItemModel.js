@@ -7,7 +7,7 @@ const PackageItemSchema = new mongoose.Schema(
       required: true,
     },
 
-    name: {
+    packageName: {
       type: String,
       required: true,
     },
@@ -45,11 +45,12 @@ const PackageItemSchema = new mongoose.Schema(
       assignedDriver: { type: String, required: true },
       trackingNumber: { type: String, required: true },
     },
-
+    
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+
     },
   },
   { timestamps: true }
