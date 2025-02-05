@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <>
       <Hero />
-      <HomeCards />
+      {/* <HomeCards /> */}
       <InProgressPackageCards isHome={true} showInProgress={true} />
       <ViewAllPackages />
     </>

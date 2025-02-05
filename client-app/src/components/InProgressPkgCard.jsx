@@ -6,7 +6,7 @@ const InProgressPackageCards = ({isHome = false, showInProgress = false }) => {
   const filterInProgressPackages = (packages) => {
     return packages.filter(packageItem => packageItem.currentStatus === 'In Progress');
   };
-  let displayedPackages = isHome ? packages.slice(0, 3) : packages;
+  let displayedPackages = isHome ? packages.slice(0, 4) : packages;
   if(showInProgress) {
     displayedPackages = filterInProgressPackages(displayedPackages);
   }
