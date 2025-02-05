@@ -153,35 +153,92 @@ export const getPackageItems = asyncHandler(async (req, res) => {
       "deliveryDetails.deliveryDate": -1,
     });
 
-    return res.status(200).json(packageItems);
+    const transformedItems = packageItems.map((item) => ({
+      id: item._id.toString(),
+      packageName: `PKG-${item.packageId}`,
+      priority: item.priority,
+      description: item.description,
+      currentStatus: item.currentStatus,
+      additionalInstructions: item.additionalInstructions,
+      deliveryDetails: {
+        deliveryDate: item.deliveryDetails.deliveryDate,
+        deliveryTime: item.deliveryDetails.deliveryTime,
+        assignedDriver: item.deliveryDetails.assignedDriver,
+        trackingNumber: item.deliveryDetails.trackingNumber,
+      },
+    }));
+
+    return res.status(200).json(transformedItems);
   } catch (error) {
     console.log("Error getting package items:", error);
-    return res.status(500).json({
-      message: "Server Error",
-    });
+    return res.status(500).json({ message: "Server Error" });
   }
 });
+
+// get packageItems by Id
+export const getPackageItemById = asyncHandler(async (req, res) => {
+  try {
+    const packageItem = await PackageItem.findById(req.params.id);
+    console.log(packageItem)
+
+    if (!packageItem) {
+      return res.status(404).json({ message: "Package item not found" });
+    }
+
+    const transformedItem = {
+      id: packageItem._id.toString(),
+      packageName: `PKG-${packageItem.packageId}`,
+      priority: packageItem.priority,
+      description: packageItem.description,
+      currentStatus: packageItem.currentStatus,
+      additionalInstructions: packageItem.additionalInstructions,
+      deliveryDetails: {
+        deliveryDate: packageItem.deliveryDetails.deliveryDate, // Extract date part
+        deliveryTime: packageItem.deliveryDetails.deliveryTime,
+        assignedDriver: packageItem.deliveryDetails.assignedDriver,
+        trackingNumber: packageItem.deliveryDetails.trackingNumber,
+      },
+    };
+
+    return res.status(200).json(transformedItem);
+  } catch (error) {
+    console.error("Error getting package item:", error);
+    return res.status(500).json({ message: "Server Error" });
+  }
+});    
 
 // get packageItems by user
 export const getPackageItemsByUser = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
+      return res.status(404).json({ message: "User not found" });
     }
-    const packageItems = await PackageItem.find({
-      customer: user._id,
-    }).populate("customer");
-    return res.status(200).json(packageItems);
+
+    const packageItems = await PackageItem.find({ customer: user._id });
+
+    const transformedItems = packageItems.map((item) => ({
+      id: item._id.toString(),
+      packageName: `PKG-${item.packageId}`,
+      priority: item.priority,
+      description: item.description,
+      currentStatus: item.currentStatus,
+      additionalInstructions: item.additionalInstructions,
+      deliveryDetails: {
+        deliveryDate: item.deliveryDetails.deliveryDate,
+        deliveryTime: item.deliveryDetails.deliveryTime,
+        assignedDriver: item.deliveryDetails.assignedDriver,
+        trackingNumber: item.deliveryDetails.trackingNumber,
+      },
+    }));
+
+    return res.status(200).json(transformedItems);
   } catch (error) {
-    console.log("Error getting user:", error);
-    return res.status(500).json({
-      message: "Server Error",
-    });
+    console.log("Error getting user package items:", error);
+    return res.status(500).json({ message: "Server Error" });
   }
 });
+
 
 // search packageItems
 export const searchPackageItems = asyncHandler(async (req, res) => {
@@ -202,15 +259,30 @@ export const searchPackageItems = asyncHandler(async (req, res) => {
       query["deliveryDetails.trackingNumber"] = trackingNumber;
     }
 
-    const packageItems = await PackageItem.find(query).populate("customer");
-    return res.status(200).json(packageItems);
+    const packageItems = await PackageItem.find(query);
+
+    const transformedItems = packageItems.map((item) => ({
+      id: item._id.toString(),
+      packageName: `PKG-${item.packageId}`,
+      priority: item.priority,
+      description: item.description,
+      currentStatus: item.currentStatus,
+      additionalInstructions: item.additionalInstructions,
+      deliveryDetails: {
+        deliveryDate: item.deliveryDetails.deliveryDate,
+        deliveryTime: item.deliveryDetails.deliveryTime,
+        assignedDriver: item.deliveryDetails.assignedDriver,
+        trackingNumber: item.deliveryDetails.trackingNumber,
+      },
+    }));
+
+    return res.status(200).json(transformedItems);
   } catch (error) {
     console.log("Error searching package items:", error);
-    return res.status(500).json({
-      message: "Server Error",
-    });
+    return res.status(500).json({ message: "Server Error" });
   }
 });
+
 
 // update packageItem
 export const updatePackageItem = asyncHandler(async (req, res) => {
@@ -233,9 +305,10 @@ export const updatePackageItem = asyncHandler(async (req, res) => {
     console.info('User found for the request:', user);
 
     const { id } = req.params;
+    console.log()
     const { deliveryDate, deliveryTime, additionalInstructions } = req.body;
 
-    const packageItem = await PackageItem.findOne({packageId: id});
+    const packageItem = await PackageItem.findById(id);
     if (!packageItem) {
       return res.status(404).json({
         message: "Package item not found",

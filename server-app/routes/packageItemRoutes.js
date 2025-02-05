@@ -1,5 +1,5 @@
 import express from "express";
-import { createPackageItem, getPackageItems, getPackageItemsByUser, searchPackageItems, updatePackageItem } from "../controllers/packageItemController.js";
+import { createPackageItem, getPackageItems, getPackageItemsByUser, searchPackageItems, updatePackageItem, getPackageItemById } from "../controllers/packageItemController.js";
 import  protect  from "../middleware/protect.js";
 
 const router = express.Router();
@@ -9,6 +9,7 @@ router.post("/packageitems", protect, createPackageItem);
 
 // get requests
 router.get("/packageitems", getPackageItems);
+router.get("/packageitems/:id", getPackageItemById);
 router.get("/packageitems/user/:id", getPackageItemsByUser);
 router.get("/packageitems/search", searchPackageItems);
 

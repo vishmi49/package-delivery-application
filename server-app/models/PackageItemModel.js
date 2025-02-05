@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const PackageItemSchema = new mongoose.Schema(
   {
-    packageId: {
-      type: Number,
-      required: true,
-    },
-
     packageName: {
       type: String,
       required: true,
