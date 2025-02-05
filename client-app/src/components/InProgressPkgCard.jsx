@@ -1,7 +1,36 @@
 import PackageListing from "./packageListing";
-import packages from "../data.json";
+import { useState, useEffect } from "react";
+
+const API_BASE_URL = "http://localhost:8000/api/v1";
 
 const InProgressPackageCards = ({isHome = false, showInProgress = false }) => {
+  const [packages, setPackages] = useState([]);
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/packageitems/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Ensures cookies are sent with request
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch package data");
+        }
+
+        const data = await response.json();
+        setPackages(data); // Assuming the API returns an array of packages
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackages();
+  }, []);
 
   const filterInProgressPackages = (packages) => {
     return packages.filter(packageItem => packageItem.currentStatus === 'In Progress');

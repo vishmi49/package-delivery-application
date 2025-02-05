@@ -13,7 +13,7 @@ const PackageListing = ({ packageItem }) => {
         <h3 className="text-xl font-bold">{updatedPackage.packageName}</h3>
       </div>
       <div className="mb-5">{updatedPackage.description}</div>
-      <h3 className="text-indigo-500 mb-2">{updatedPackage.deliveryDetails.deliveryDate}</h3>
+      <h3 className="text-indigo-500 mb-2">{updatedPackage.deliveryDetails.deliveryDate.split("T")[0]}</h3>
       <div className="border border-gray-100 mb-5"></div>
       <div className="flex flex-col lg:flex-row justify-between mb-4">
         <div className="text-orange-700 mb-3">
