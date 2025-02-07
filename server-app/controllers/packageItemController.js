@@ -5,6 +5,7 @@ import { isValid, parseISO } from "date-fns";
 
 export const createPackageItem = asyncHandler(async (req, res) => {
   try {
+    console.log("Point 1");
     const user = await User.findOne({ auth0Id: req.oidc.user.sub });
     const isAuth = req.oidc.isAuthenticated() || user.email;
 
@@ -179,7 +180,6 @@ export const getPackageItems = asyncHandler(async (req, res) => {
 export const getPackageItemById = asyncHandler(async (req, res) => {
   try {
     const packageItem = await PackageItem.findById(req.params.id);
-    console.log(packageItem)
 
     if (!packageItem) {
       return res.status(404).json({ message: "Package item not found" });
@@ -211,15 +211,17 @@ export const getPackageItemById = asyncHandler(async (req, res) => {
 export const getPackageItemsByUser = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const packageItems = await PackageItem.find({ customer: user._id });
+    console.log(packageItem)
 
     const transformedItems = packageItems.map((item) => ({
       id: item._id.toString(),
-      packageName: `PKG-${item.packageId}`,
+      packageName: item.packageName,
       priority: item.priority,
       description: item.description,
       currentStatus: item.currentStatus,
@@ -287,7 +289,6 @@ export const searchPackageItems = asyncHandler(async (req, res) => {
 // update packageItem
 export const updatePackageItem = asyncHandler(async (req, res) => {
   try {
-    console.log('PUT request received');
     if (!req.oidc || !req.oidc.user) {
       return res.status(401).json({ message: "Not Authorized" });
     }
@@ -305,7 +306,6 @@ export const updatePackageItem = asyncHandler(async (req, res) => {
     console.info('User found for the request:', user);
 
     const { id } = req.params;
-    console.log()
     const { deliveryDate, deliveryTime, additionalInstructions } = req.body;
 
     const packageItem = await PackageItem.findById(id);
@@ -317,10 +317,9 @@ export const updatePackageItem = asyncHandler(async (req, res) => {
 
     console.info(`PackaggeItsm found for the packageId:${id}`);
 
-
     if (packageItem.customer.toString() !== user.id.toString()) {
       return res.status(401).json({
-        message: "Not authorized to update package item",
+        message: "Not authorized",
       });
     }
 

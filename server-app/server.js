@@ -10,7 +10,7 @@ import asyncHandler from "express-async-handler";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const config = {
   authRequired: false,
   auth0Logout: true,
@@ -31,6 +31,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(auth(config));
+
+app.use((req, res, next) => {
+  if (process.env.TEST_MODE === "true") {
+    req.oidc = {
+      user: {
+        sub: "auth0|test-user-123",
+        email: "test@example.com",
+        name: "Test User",
+      },
+      isAuthenticated: () => true,
+    };
+  }
+  next();
+});
 
 // function to check if user exisits in the db
 

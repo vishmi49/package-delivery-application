@@ -5,7 +5,7 @@ import  protect  from "../middleware/protect.js";
 const router = express.Router();
 
 // post requests
-router.post("/packageitems", protect, createPackageItem);
+router.post("/packageitems", createPackageItem);
 
 // get requests
 router.get("/packageitems", getPackageItems);
