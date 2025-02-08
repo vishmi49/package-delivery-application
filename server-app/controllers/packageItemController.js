@@ -185,9 +185,11 @@ export const getPackageItemById = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Package item not found" });
     }
 
+    console.log("Package item found:", packageItem);
+
     const transformedItem = {
       id: packageItem._id.toString(),
-      packageName: `PKG-${item.packageName}`,
+      packageName: `PKG-${packageItem.packageName}`,
       priority: packageItem.priority,
       description: packageItem.description,
       currentStatus: packageItem.currentStatus,
@@ -216,7 +218,9 @@ export const getPackageItemsByUser = asyncHandler(async (req, res) => {
     }
     console.log(user)
 
-    const packageItems = await PackageItem.find({ customer: user._id });
+    const packageItems = await PackageItem.find({ customer: user._id }).sort({
+      "deliveryDetails.deliveryDate": -1,
+    });
     console.log(packageItems)
 
     const transformedItems = packageItems.map((item) => ({
