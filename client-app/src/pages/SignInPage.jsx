@@ -1,6 +1,6 @@
 import LoginButton from "../components/LoginButton";
 import packageLogo from "../assets/images/logo3.png";
-
+import { Link } from "react-router-dom";
 
 const SignInPage = () => {
   return (
@@ -19,7 +19,12 @@ const SignInPage = () => {
       </div>
 
       {/* Login Button */}
-      <LoginButton />
+      <button 
+        className="bg-indigo-600 text-white font-semibold text-2xl py-4 px-10 rounded-xl shadow-lg transition-all duration-300 hover:bg-indigo-700"
+        onClick={() => window.location.href = 'http://localhost:8000/login'}
+      >
+        Sign In
+      </button>
     </div>
      
   
