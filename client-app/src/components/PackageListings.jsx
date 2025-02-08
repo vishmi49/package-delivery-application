@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import RescheduleModal from "./RescheduleModal";
-
-const API_BASE_URL = "http://localhost:8000/api/v1";
+import { useGlobalContext } from "../../context/globalContext";
+import API_BASE_URL from "../config";
 
 const PackageListings = ({ isHome = false, showInProgress = false }) => {
+  const { auth0User } = useGlobalContext();
   const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +15,7 @@ const PackageListings = ({ isHome = false, showInProgress = false }) => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/packageitems/`, {
+        const response = await fetch(`${API_BASE_URL}/packageitems/user/${auth0User.email}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -35,14 +36,15 @@ const PackageListings = ({ isHome = false, showInProgress = false }) => {
       }
     };
 
-    fetchPackages();
-  }, []);
-
+    if (auth0User) {
+      fetchPackages();
+    }
+  }, [auth0User]);
 
   // Show only 3 packages if on Home Page, otherwise show all
   let displayedPackages = isHome ? packages.slice(0, 4) : packages;
   if (showInProgress) {
-    displayedPackages = filterInProgressPackages(displayedPackages);
+    displayedPackages = displayedPackages.filter(packageItem => packageItem.currentStatus === 'In Progress');
   }
 
   // Open Reschedule Modal

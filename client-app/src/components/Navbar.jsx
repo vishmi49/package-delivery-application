@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/globalContext";
 import { useState } from "react";
+import axios from "axios";
 import logo from "../assets/images/logo3.png";
 
 const Navbar = () => {
@@ -8,9 +9,14 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/signin");
+  const handleLogout = async () => {
+    try {
+      await axios.get("/api/v1/logout");
+      logout();
+      navigate("/signin");
+    } catch (error) {
+      console.log("Error logging out", error);
+    }
   };
 
   const linkClass = ({ isActive }) =>

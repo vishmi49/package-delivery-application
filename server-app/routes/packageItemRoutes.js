@@ -10,7 +10,7 @@ router.post("/packageitems", createPackageItem);
 // get requests
 router.get("/packageitems", getPackageItems);
 router.get("/packageitems/:id", getPackageItemById);
-router.get("/packageitems/user/:id", getPackageItemsByUser);
+router.get("/packageitems/user/:email", getPackageItemsByUser);
 router.get("/packageitems/search", searchPackageItems);
 
 // put requests

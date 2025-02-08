@@ -7,12 +7,12 @@ const PackagesPage = () => {
   const { isAuthenticated } = useGlobalContext();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     console.log("User not authenticated in PackagesPage");
-  //     navigate("/signin");
-  //   }
-  // }, [isAuthenticated, navigate]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log("User not authenticated in PackagesPage");
+      navigate("/signin");
+    }
+  }, [isAuthenticated, navigate]);
 
   if (!isAuthenticated) {
     return null;

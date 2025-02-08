@@ -210,14 +210,14 @@ export const getPackageItemById = asyncHandler(async (req, res) => {
 // get packageItems by user
 export const getPackageItemsByUser = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    console.log(user);
+    const user = await User.findOne({email: String(req.params.email)});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log(user)
 
     const packageItems = await PackageItem.find({ customer: user._id });
-    console.log(packageItem)
+    console.log(packageItems)
 
     const transformedItems = packageItems.map((item) => ({
       id: item._id.toString(),

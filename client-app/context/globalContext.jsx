@@ -10,7 +10,7 @@ export const GlobalContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [auth0User, setAuth0User] = useState(null);
   const [userProfile, setUserProfile] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -18,8 +18,13 @@ export const GlobalContextProvider = ({ children }) => {
       try {
         const res = await axios.get("/api/v1/check-auth");
         console.log(res.data);
-        setIsAuthenticated(res.data.isAuthenticated);
-        setAuth0User(res.data.user);
+        if (res.data.isAuthenticated) {
+          setIsAuthenticated(true);
+          setAuth0User(res.data.user);
+        } else {
+          setIsAuthenticated(false);
+          setAuth0User(null);
+        }
       } catch (error) {
         console.log("Error checking auth", error);
       } finally {
@@ -34,8 +39,8 @@ export const GlobalContextProvider = ({ children }) => {
     setIsAuthenticated(false);
     setAuth0User(null);
     setUserProfile({});
-    // Optionally, you can clear localStorage or cookies here
     localStorage.removeItem('authToken');
+    // Optionally, you can clear cookies or make a logout request to the server here
   };
 
   return (

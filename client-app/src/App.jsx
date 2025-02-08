@@ -1,3 +1,4 @@
+import React from "react";
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
@@ -20,7 +21,7 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  const { loading, isAuthenticated } = useGlobalContext();
+  const { loading } = useGlobalContext();
 
   if (loading) {
     return <p>Loading...</p>;

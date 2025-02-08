@@ -9,12 +9,12 @@ const HomePage = () => {
   const { isAuthenticated, loading } = useGlobalContext();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!loading && !isAuthenticated) {
-  //     console.log("User not authenticated in HomePage");
-  //     navigate("/signin");
-  //   }
-  // }, [isAuthenticated, loading, navigate]);
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      console.log("User not authenticated in HomePage");
+      navigate("/signin");
+    }
+  }, [isAuthenticated, loading, navigate]);
 
   if (loading) {
     return <p>Loading...</p>;
