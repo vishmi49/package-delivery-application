@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import PackagesPage from "./pages/PackagesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignInPage from "./pages/SignInPage";
-import { GlobalContextProvider } from "../context/globalContext";
+import { useGlobalContext } from "../context/globalContext";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,12 +20,13 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  return (
-    <GlobalContextProvider>
-      <RouterProvider router={router} />
-    </GlobalContextProvider>
-  );
+  const { loading, isAuthenticated } = useGlobalContext();
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;
-
