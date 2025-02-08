@@ -32,7 +32,7 @@ export const GlobalContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ isAuthenticated, auth0User, loading }}>
+    <GlobalContext.Provider value={{ isAuthenticated, setIsAuthenticated, auth0User, setAuth0User, loading }}>
       {children}
     </GlobalContext.Provider>
   );

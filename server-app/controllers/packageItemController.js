@@ -156,7 +156,7 @@ export const getPackageItems = asyncHandler(async (req, res) => {
 
     const transformedItems = packageItems.map((item) => ({
       id: item._id.toString(),
-      packageName: `PKG-${item.packageId}`,
+      packageName: `PKG-${item.packageName}`,
       priority: item.priority,
       description: item.description,
       currentStatus: item.currentStatus,
@@ -187,7 +187,7 @@ export const getPackageItemById = asyncHandler(async (req, res) => {
 
     const transformedItem = {
       id: packageItem._id.toString(),
-      packageName: `PKG-${packageItem.packageId}`,
+      packageName: `PKG-${item.packageName}`,
       priority: packageItem.priority,
       description: packageItem.description,
       currentStatus: packageItem.currentStatus,
@@ -221,7 +221,7 @@ export const getPackageItemsByUser = asyncHandler(async (req, res) => {
 
     const transformedItems = packageItems.map((item) => ({
       id: item._id.toString(),
-      packageName: item.packageName,
+      packageName: `PKG-${item.packageName}`,
       priority: item.priority,
       description: item.description,
       currentStatus: item.currentStatus,
@@ -265,7 +265,7 @@ export const searchPackageItems = asyncHandler(async (req, res) => {
 
     const transformedItems = packageItems.map((item) => ({
       id: item._id.toString(),
-      packageName: `PKG-${item.packageId}`,
+      packageName: `PKG-${item.packageName}`,
       priority: item.priority,
       description: item.description,
       currentStatus: item.currentStatus,

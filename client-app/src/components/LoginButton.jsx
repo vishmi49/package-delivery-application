@@ -1,15 +1,18 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "@headlessui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginButton = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
+  console.log("user authenticated", isAuthenticated);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
     }
+    console.log("user authenticated", isAuthenticated);
   }, [isAuthenticated, navigate]);
 
   return (
