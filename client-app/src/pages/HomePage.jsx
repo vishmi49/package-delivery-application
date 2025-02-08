@@ -6,6 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const HomePage = () => {
+  const { isAuthenticated } = useGlobalContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log("User not authenticated in HomePage");
+      navigate("/signin");
+    }
+  }, [isAuthenticated, navigate]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <>
