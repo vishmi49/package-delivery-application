@@ -101,7 +101,8 @@ const PackageListings = ({ isHome = false, showInProgress = false }) => {
                   <th className="border border-gray-300 px-4 py-2 text-left">Delivery Date</th>
                   <th className="border border-gray-300 px-4 py-2 text-left">Delivery Time</th>
                   <th className="border border-gray-300 px-4 py-2 text-left">Current Status</th>
-                  <th className="border border-gray-300 px-4 py-2 text-left">Description</th>
+                  <th className="border border-gray-300 px-4 py-2 text-left">Additional Instructions</th>
+                  <th className="border border-gray-300 px-4 py-2 text-center">Description</th>
                   <th className="border border-gray-300 px-4 py-2 text-center">Reschedule</th>
                 </tr>
               </thead>
@@ -120,7 +121,8 @@ const PackageListings = ({ isHome = false, showInProgress = false }) => {
                     <td className="border border-gray-300 px-4 py-2 text-orange-700">
                       {packageItem.currentStatus}
                     </td>
-                    <td className="border border-gray-300 px-4 py-2">{packageItem.description}</td>
+                    <td className="border border-gray-300 px-4 py-2">{packageItem.additionalInstructions}</td>
+                    <td className="border border-gray-300 px-4 py-2 "> {packageItem.description}</td>
                     <td className="border border-gray-300 px-4 py-2 text-center">
                       <button
                         className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm"

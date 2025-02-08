@@ -1,5 +1,7 @@
 import { useState, useEffect, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import AlertMessage from "./AlertMessage";
+
 const API_BASE_URL = "http://localhost:8000/api/v1";
 
 const RescheduleModal = ({ isOpen, onClose, packageItem, onReschedule }) => {
@@ -9,25 +11,20 @@ const RescheduleModal = ({ isOpen, onClose, packageItem, onReschedule }) => {
   const [selectedTime, setSelectedTime] = useState(packageItem.deliveryDetails.deliveryTime);
   const [instructions, setInstructions] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Extract session token from cookies
-  const getSessionToken = () => {
-    const cookies = document.cookie.split("; ");
-    console.log(document)
-    const sessionCookie = cookies.find((row) => row.startsWith("appSession="));
-    return sessionCookie ? sessionCookie.split("=")[1] : null;
-  };
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
       setSelectedDate(packageItem.deliveryDetails.deliveryDate);
       setSelectedTime(packageItem.deliveryDetails.deliveryTime);
       setInstructions("");
+      setAlert(null); // Clear alert when modal opens
     }
   }, [isOpen, packageItem.id]);
 
   const handleSave = async () => {
     setLoading(true);
+    setAlert(null); // Clear any existing alert before the request
 
     try {
       const response = await fetch(`${API_BASE_URL}/packageitems/${packageItem.id}`, {
@@ -45,16 +42,19 @@ const RescheduleModal = ({ isOpen, onClose, packageItem, onReschedule }) => {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Package item updated successfully");
+        setAlert({ message: "Package item updated successfully", type: "success" });
         onReschedule(data.packageItem);
+        setTimeout(() => {
+          setAlert(null);
+          onClose();
+        }, 2000); // Auto-close modal after success message
       } else {
-        alert(data.message || "Failed to update package item");
+        setAlert({ message: data.message || "Failed to update package item", type: "error" });
       }
     } catch (error) {
-      alert("Error updating package item");
+      setAlert({ message: "An error occurred while updating the package item", type: "error" });
     }
     setLoading(false);
-    onClose();
   };
 
   return (
@@ -75,6 +75,8 @@ const RescheduleModal = ({ isOpen, onClose, packageItem, onReschedule }) => {
             <h1 className="text-3xl font-bold text-indigo-600 mb-4 text-center">
               Reschedule Delivery
             </h1>
+
+            {alert && <AlertMessage message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
 
             <div className="space-y-4">
               <div>
