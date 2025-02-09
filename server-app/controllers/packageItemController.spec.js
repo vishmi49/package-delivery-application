@@ -64,7 +64,7 @@ describe('Package Item Controller', () => {
         packageName: 'Package 1',
         priority: 'High',
         description: 'Description 1',
-        currentStatus: 'In Progress',
+        currentStatus: 'Delivered',
         additionalInstructions: 'Handle with care',
         deliveryDetails: {
           deliveryDate: '2023-01-01',
@@ -128,6 +128,39 @@ describe('Package Item Controller', () => {
 
       stubs.userStub.resolves(mockUser);
       stubs.packageItemFindStub().exec.resolves(mockPackageItems);
+
+      const res = await request(app).get('/api/v1/packageitems/user/test@example.com');
+
+      expect(res.status).toBe(200);
+    });
+
+    it('should return an error if the package item status is not In progress state', async () => {
+      const mockUser = {
+        _id: '67804adb918b35a7ccbbdc12',
+        email: 'test@example.com',
+        auth0Id: 'auth0|123456',
+      };
+
+      const mockPackageItems = [
+        {
+          _id: '1',
+          packageName: 'Package 1',
+          priority: 'High',
+          description: 'Description 1',
+          currentStatus: 'Delivered',
+          additionalInstructions: 'Handle with care',
+          customer: '67804adb918b35a7ccbbdc12',
+          deliveryDetails: {
+            deliveryDate: '2023-01-01',
+            deliveryTime: '10:00 AM',
+            assignedDriver: 'Driver 1',
+            trackingNumber: '123456',
+          },
+        },
+      ];
+
+      stubs.userStub.resolves(mockUser);
+      stubs.packageItemFindStub().exec.resolves({ message: 'Package item is not available for update' });
 
       const res = await request(app).get('/api/v1/packageitems/user/test@example.com');
 

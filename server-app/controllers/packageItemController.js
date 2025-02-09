@@ -319,6 +319,13 @@ export const updatePackageItem = asyncHandler(async (req, res) => {
       });
     }
 
+    if (packageItem.status === "Delivered") {
+      return res.status(400).json({
+        message: "Package item is not available for update",
+      });
+    }
+  
+
     console.info(`PackaggeItsm found for the packageId:${id}`);
 
     if (packageItem.customer.toString() !== user.id.toString()) {
