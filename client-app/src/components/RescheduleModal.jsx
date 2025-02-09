@@ -47,7 +47,9 @@ const RescheduleModal = ({ isOpen, onClose, packageItem, onReschedule }) => {
         setTimeout(() => {
           setAlert(null);
           onClose();
-        }, 2000); // Auto-close modal after success message
+          window.location.reload();
+        }, 20); // Auto-close modal after success message
+        
       } else {
         setAlert({ message: data.message || "Failed to update package item", type: "error" });
       }
@@ -86,7 +88,16 @@ const RescheduleModal = ({ isOpen, onClose, packageItem, onReschedule }) => {
                   className="w-full border border-gray-300 rounded-lg p-3"
                   value={selectedDate}
                   min={new Date().toISOString().split("T")[0]}
-                  onChange={(e) => setSelectedDate(e.target.value)}
+                  onChange={(e) => {
+                    let selectedDate = new Date(e.target.value + 'T12:00:00'); 
+                    selectedDate.setDate(selectedDate.getDate() + 1); 
+                    const dayOfWeek = selectedDate.getUTCDay();
+                    if (dayOfWeek === 0) { // 0 represents Sunday
+                      setAlert({ message: "Sundays are not available for delivery", type: "error" });
+                      return;
+                    }
+                    setSelectedDate(selectedDate.toISOString().split('T')[0]); 
+                  }}
                 />
               </div>
 
