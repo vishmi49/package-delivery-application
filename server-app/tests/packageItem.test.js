@@ -2,7 +2,7 @@ import * as chai from "chai";
 import chaiHttp from "chai-http";
 import sinon from "sinon";
 import supertest from "supertest";
-import { app } from "../server.js"; // Ensure correct import
+import { app } from "../server.js";
 import PackageItem from "../models/PackageItemModel.js";
 import User from "../models/UserModel.js";
 import { mockAuth, stubUserFindOne, stubPackageItemMethods } from "./helpers/testHelpers.js";

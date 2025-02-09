@@ -1,6 +1,6 @@
 import request from 'supertest';
 import express from 'express';
-import userRoutes from '../routes/userRoutes';
+import userRoutes from './userRoutes';
 import { getUserProfile } from '../controllers/userController';
 
 jest.mock('../controllers/userController');

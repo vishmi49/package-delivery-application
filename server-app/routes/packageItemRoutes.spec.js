@@ -1,6 +1,6 @@
 import request from 'supertest';
 import express from 'express';
-import packageItemRoutes from '../routes/packageItemRoutes';
+import packageItemRoutes from './packageItemRoutes';
 import { createPackageItem, getPackageItems, getPackageItemsByUser, searchPackageItems, updatePackageItem, getPackageItemById } from '../controllers/packageItemController';
 import protect from '../middleware/protect';
 

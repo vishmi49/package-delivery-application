@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 import { getPackageItems, getPackageItemById, getPackageItemsByUser } from './packageItemController';
-import { stubDatabase, restoreDatabase } from '../helpers/testHelpers';
+import { stubDatabase, restoreDatabase } from '../helpers/controllerHelpers';
 
 const app = express();
 app.use(express.json());

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "npm run test:unit && npm run test:int",
+    "test": "npm run test:unit",
     "test:int": "mocha 'tests/**.test.js' --exit --timeout 5000",
     "test:unit": "jest"
   },

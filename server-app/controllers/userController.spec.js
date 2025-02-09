@@ -1,6 +1,6 @@
 import request from "supertest";
 import express from "express";
-import { getUserProfile } from "../controllers/userController.js";
+import { getUserProfile } from "./userController.js";
 import User from "../models/UserModel.js";
 import asynHandler from "express-async-handler";
 
